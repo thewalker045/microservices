@@ -11,15 +11,14 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/order")
 public class orderController {
 
-    private final RestTemplate restTemplate;
     private final OrderService orderService;
-    orderController(OrderService orderService,RestTemplate restTemplate){
-        this.orderService=orderService;
-        this.restTemplate=restTemplate;
+
+    orderController(OrderService orderService) {
+        this.orderService = orderService;
     }
 
     @PostMapping("/{productId}")
-    public String placeOrder(@PathVariable String productId){
+    public String placeOrder(@PathVariable String productId) {
 
         return orderService.placeOrder(productId);
     }
