@@ -1,6 +1,7 @@
 package org.example.ecomorderservice.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
@@ -26,6 +27,8 @@ public class OrderService {
         String response = restClient.get()
                 .uri("http://localhost:8081/inventory/{productId}", productId)
                 .retrieve()
+                .onStatus(HttpStatusCode::is4xxClientError,(((request, response1) -> {
+                    throw new RuntimeException();})))
                 .body(String.class);
 
         assert response != null;
